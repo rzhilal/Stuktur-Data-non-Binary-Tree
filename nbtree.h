@@ -54,7 +54,17 @@ void nbUpgrade(nbAddr *root);
 void nbDelete(nbAddr *pDel, nbTree *pTree);
 // Menghapus node tertentu dan jika node tersebut memiliki child, maka posisinya digantikan oleh fs dari node tsb
 
+void nbDeleteSub(nbAddr *pDel, nbTree *pTree);
+//Mengapus node beserta bawahannyaa, jika menghapus root maka tree akan menjadi kosong
+
 void nbPrint(nbAddr node, char tab[]);
 
+int getLevel(nbAddr Node);
+
+int nbNumLev(nbTree X);
+
+int getHeight (nbAddr Node, nbTree X);
+
+int degree(nbAddr Node);
 
 #endif

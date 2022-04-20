@@ -22,12 +22,30 @@ int main(int argc, char** argv) {
 	nbInsert(&pTree, nbSearch(Root(pTree), 7), 6);
 	
 	nbInsert(&pTree, nbSearch(Root(pTree), 9), 0);
+	nbInsert(&pTree, nbSearch(Root(pTree), 9), 10);
+	nbInsert(&pTree, nbSearch(Root(pTree), 10), 67);
+	printf("Tree : \n");
 	nbPrint(Root(pTree), str);
-	printf("\n\n\n");
-	
+	printf("\nLevel pada data berisi 3: %d\n", getLevel(nbSearch(Root(pTree), 3)));
+	printf("Degree dari data berisi 3 : %d\n", degree(nbSearch(Root(pTree), 3)));
+	printf("Height pada data berisi 3: %d\n", getHeight(nbSearch(Root(pTree), 3), pTree));
+	printf("Jumlah Level/depth pada tree : %d\n\n", nbNumLev(pTree));
 	srcNode = nbSearch(Root(pTree), 9);
 	nbDelete( &srcNode, &pTree);
 	
+	printf("Deletion pada node bernilai 9\n");
+	nbPrint(Root(pTree), str);
+	
+	srcNode = nbSearch(Root(pTree), 67);
+	nbDelete( &srcNode, &pTree);
+	
+	printf("Deletion pada node bernilai 67\n");
+	nbPrint(Root(pTree), str);
+	
+	srcNode = nbSearch(Root(pTree), 3);
+	nbDelete( &srcNode, &pTree);
+	
+	printf("Deletion pada root\n");
 	nbPrint(Root(pTree), str);
 	
 	return 0;

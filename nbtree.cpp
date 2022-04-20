@@ -141,7 +141,7 @@ void nbDelete(nbAddr *pDel, nbTree *pTree){
 				FS(Parent(pCur))=FS(pCur);
 				Parent(FS(pCur)) = Parent(pCur);
 				nbDNode(&(*pDel));
-			}else //kondisi node bukan merupakan first son (masih error)
+			}else //kondisi node bukan merupakan first son
 			{
 				pCur = FS(Parent(*pDel));
 				while(NB(pCur) != *pDel) //pencarian node sebelum pDel
@@ -165,6 +165,24 @@ void nbDelete(nbAddr *pDel, nbTree *pTree){
 	}	
 }
 
+//void nbDeleteSub(nbAddr *pDel, nbTree *pTree)
+//{
+//	nbAddr pCur;
+//	pCur = *pDel;
+//	
+//	if(Root(*pTree) != NULL)
+//	{
+//		if(*pDel == Root(*pTree))
+//		{
+//			pCur = nbDeleteSub(&(FS(*pDel)), &(*pTree));
+//			if (pCur == NULL)
+//				return nbDeleteSub(&(FS(*pDel)), &(*pTree));
+//			nbDNode(*pDel);
+//		}
+//	}else
+//		printf("Tree kosong");
+//}
+
 void nbPrint(nbAddr node, char tab[]){
 	char tempTab[255];
 	strcpy(tempTab, tab);
@@ -174,5 +192,82 @@ void nbPrint(nbAddr node, char tab[]){
 		nbPrint(FS(node),tempTab);
 		nbPrint(NB(node),tab);
 	}
+}
+
+int nbNumLev(nbTree X)
+{
+	int status = 0;
+	nbAddr pCur;
+	pCur = Root(X);
+	bool counted = true;
+	
+	if(Root(X) == NULL)
+	{
+		printf("Tree kosong");
+		return -1;
+	}
+	pCur = FS(pCur);
+	status = status +1;
+	while(Parent(pCur) != NULL)
+	{
+		if (FS(pCur)!= NULL && counted)
+		{
+			pCur = FS(pCur);
+			if(getLevel(pCur)>status)
+				getLevel(pCur);
+		}
+		else if (NB(pCur)!= NULL)
+		{
+			pCur = NB(pCur);
+			if(FS(pCur) != NULL)
+			{
+				pCur = FS(pCur);
+				counted = true;
+				if(getLevel(pCur)>status)
+					status = getLevel(pCur);
+			}else
+				counted = false;
+		}
+		else
+		{
+			pCur = Parent(pCur);
+			counted = false;
+		}
+	}
+	return status;
+}
+
+int getLevel(nbAddr Node)
+{
+	int level = 0;
+	while ( Parent(Node) != NULL)
+	{
+		Node = Parent(Node);
+		level++;
+	}
+	return level;
+}
+
+int degree(nbAddr Node)
+{
+	int total;
+	if(FS(Node) == NULL)
+		return 0;
+	else
+	{
+		Node = FS(Node);
+		total = 1;
+		while(NB(Node) != NULL)
+		{
+			Node = NB(Node);
+			total++;
+		}
+		return total;
+	}
+}
+
+int getHeight (nbAddr Node, nbTree X)
+{
+	return nbNumLev(X) - getLevel(Node);	
 }
 
